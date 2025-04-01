@@ -1,0 +1,43 @@
+# Pliki systemowe i edytorów
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Wirtualne środowisko (jeśli używasz venv)
+venv/
+.env
+*.env
+*.venv
+
+# Pliki zależności (jeśli korzystasz z Pipenv)
+Pipfile
+Pipfile.lock
+
+# Logi i cache
+logs/
+*.log
+*.sqlite3
+instance/
+*.db
+*.sqlite
+.cache/
+
+# Pliki testowe i debugowanie
+.coverage
+nosetests.xml
+*.pid
+*.out
+*.err
+
+# Konfiguracje CI/CD (np. dla GitHub Actions)
+.github/
+
+# Pliki związane z kontenerami (Docker, Kubernetes)
+docker-compose.yml
+Dockerfile

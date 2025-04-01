@@ -1,18 +1,21 @@
 from flask import Flask, request, jsonify
+from model_gemini import *
+app = Flask(__name__)
 
-app = Flask(__name__) # starts the app
+chat_session = model.start_chat(history=[])
 
-# main page
-@app.route('/')
-def main_page():
-    return 'Welcome to IAD LLM Model'
-
-# healthcheck
-@app.route('/healthcheck', methods=['POST'])
-def healthcheck():
-    if not request.is_json:
-        return jsonify({'error': 'Request is not JSON'}), 400
-
+@app.route('/generate', methods=['POST'])
+def generate_response():
     data = request.get_json()
-    return jsonify(data)
+    if not data or "prompt" not in data:
+        return jsonify({"error": "No prompt in request body"}), 400
+
+    prompt = data["prompt"]
+
+    try:
+        response = model.generate_content(prompt)
+        return jsonify({"response": response.text})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 

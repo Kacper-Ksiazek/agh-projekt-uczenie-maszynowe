@@ -1,3 +1,6 @@
+# Node modules
+**/node_modules
+
 # Pliki systemowe i edytorów
 __pycache__/
 *.pyc
@@ -14,6 +17,7 @@ venv/
 .env
 *.env
 *.venv
+**/.svelte-kit
 
 # Pliki zależności (jeśli korzystasz z Pipenv)
 Pipfile
@@ -37,7 +41,3 @@ nosetests.xml
 
 # Konfiguracje CI/CD (np. dla GitHub Actions)
 .github/
-
-# Pliki związane z kontenerami (Docker, Kubernetes)
-docker-compose.yml
-Dockerfile

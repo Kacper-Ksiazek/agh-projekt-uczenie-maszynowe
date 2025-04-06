@@ -1,9 +1,15 @@
 <script lang="ts">
+import AiGeneratedDietDetails from "$lib/components/ai-generated-diet-details.svelte";
 import DietForm from "$lib/components/diet-form/diet-form.svelte";
 import PendingRequest from "$lib/components/pending-request.svelte";
-import type { DietFormData } from "$lib/types";
+import { sampleDietPlan } from "$lib/mock";
+import { isAIGeneratedDietPlan } from "$lib/type-checkers";
+import type { AIGeneratedDietPlan, DietFormData } from "$lib/types";
 import { createMutation } from "@tanstack/svelte-query";
 import { toast } from "svelte-sonner";
+
+let aiGeneratedDiet = $state<AIGeneratedDietPlan | null>(null);
+// let aiGeneratedDiet = $state<AIGeneratedDietPlan | null>(sampleDietPlan);
 
 const API_URL = "http://127.0.0.1:5000/generate";
 
@@ -35,7 +41,20 @@ const generateMutation = createMutation({
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-    return response.json();
+
+    const json = await response.json();
+
+    if (json.error) {
+      throw new Error(json.error);
+    }
+
+    const responseBody = json?.response as unknown;
+
+    if (isAIGeneratedDietPlan(responseBody)) {
+      aiGeneratedDiet = responseBody;
+    } else {
+      throw new Error("Invalid response format");
+    }
   },
 });
 
@@ -51,8 +70,14 @@ async function generateDietUsingAI(data: DietFormData) {
 }
 </script>
 
-{#if $generateMutation.isPending}
-  <PendingRequest />
+{#if aiGeneratedDiet !== null}
+  <AiGeneratedDietDetails data={aiGeneratedDiet} />
+{:else if $generateMutation.isPending}
+  <div class="flex flex-grow items-center justify-center">
+    <PendingRequest />
+  </div>
 {:else}
-  <DietForm generateDietUsingAI={generateDietUsingAI} />
+  <div class="flex flex-grow items-center justify-center">
+    <DietForm generateDietUsingAI={generateDietUsingAI} />
+  </div>
 {/if}

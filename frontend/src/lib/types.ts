@@ -23,6 +23,7 @@ export interface DietFormData {
   // Step 3
   budget: number;
   numberOfDays: number;
+  numberOfMealsPerDay: number;
 }
 
 export interface AIGeneratedSingleMeal {

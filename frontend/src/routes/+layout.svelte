@@ -14,7 +14,7 @@ const queryClient = new QueryClient();
 <Toaster />
 
 <QueryClientProvider client={queryClient}>
-  <main class="flex h-[100dvh] flex-col items-center justify-center">
+  <main class="flex h-[100dvh] flex-col">
     {@render children()}
   </main>
 </QueryClientProvider>

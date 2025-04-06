@@ -19,8 +19,8 @@ generation_config = {
 
 model = genai.GenerativeModel(
     model_name="gemini-1.5-pro",
-    generation_config=generation_config
-system_instructions = (
+    generation_config=generation_config,
+    system_instruction =
     "You are a dietitian tasked with creating a personalized meal plan for the user. "
     "The plan should be based on the number of days provided by the user "
     "and take into account all relevant parameters they provide, such as: "
@@ -39,8 +39,11 @@ system_instructions = (
     "(e.g., macronutrient distribution, total caloric intake, etc.).\n\n"
 
     "Offer alternative ingredients or meal ideas where necessary, particularly for foods the user "
-    "dislikes or is intolerant to."
+    "dislikes or is intolerant to. \n\n"
+    
+    "Budget is given in PLN."
 )
+
 
 # Create prompt to Gemini using user data
 def data_to_prompt(data: dict) -> str:
@@ -54,6 +57,7 @@ def data_to_prompt(data: dict) -> str:
     - Activity Level: {data.get("activity_level")}  
     - Cooking Time per Day: {data.get("cooking_time_per_day")}
     - Days: {data.get("number_of_days")}
+    - Budget: {data.get("budget")} PLN
 
     - Allergies: {", ".join(map(str, data.get("allergies", []))) or "None"}
     - Intolerances: {", ".join(map(str, data.get("intolerance", []))) or "None"}
@@ -75,7 +79,8 @@ def data_to_prompt(data: dict) -> str:
                 {{
                   "name": "Meal Name",
                   "ingredients": ["ingredient1", "ingredient2"],
-                  "instructions": "How to prepare"
+                  "macros": ["calories", "protein", "carbs", "fat"],
+                  "recipe_in_steps": ["step1", "step2", "step3"]
                 }}
               ]
             }}

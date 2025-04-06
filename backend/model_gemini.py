@@ -24,6 +24,15 @@ model = genai.GenerativeModel(
 
 # Create prompt to Gemini using user data
 def data_to_prompt(data: dict) -> str:
+    schedule_entries = []
+    for s in data.get("schedule", []):
+        entry = f"""    - Start: {s.get('start', '')}
+    - End: {s.get('end', '')}
+    - Description: {s.get('description', '')}"""
+        schedule_entries.append(entry)
+
+    schedule_str = "\n\n".join(schedule_entries) if schedule_entries else "None"
+
     user_info = f"""The user profile:
     - Age: {data.get("age")}
     - Height: {data.get("height")}
@@ -33,17 +42,14 @@ def data_to_prompt(data: dict) -> str:
     - Activity Level: {data.get("activity_level")}  
     - Cooking Time per Day: {data.get("cooking_time_per_day")}
 
-    - Allergies: {", ".join(map(str, data.get("allergies", [])))}
-    - Intolerances: {", ".join(map(str, data.get("intolerance", [])))}
-    - Disliked Foods: {", ".join(map(str, data.get("disliked_foods", [])))}
-    - Preferred Foods: {", ".join(map(str, data.get("preferred_foods", [])))}
-    - Kitchen Equipment: {", ".join(map(str, data.get("kitchen_equipment", [])))}
-
+    - Allergies: {", ".join(map(str, data.get("allergies", []))) or "None"}
+    - Intolerances: {", ".join(map(str, data.get("intolerance", []))) or "None"}
+    - Disliked Foods: {", ".join(map(str, data.get("disliked_foods", []))) or "None"}
+    - Preferred Foods: {", ".join(map(str, data.get("preferred_foods", []))) or "None"}
+    - Kitchen Equipment: {", ".join(map(str, data.get("kitchen_equipment", []))) or "None"}
 
     - Daily Schedule:
-      - Start: {data.get("schedule", {}).get("start")}
-      - End: {data.get("schedule", {}).get("end")}
-      - Description: {data.get("schedule", {}).get("description")}
+{schedule_str}
     """
 
     expected_output = """
@@ -51,8 +57,6 @@ def data_to_prompt(data: dict) -> str:
 
     Return only a valid JSON in this format:
     {
-    
-    
       "days": [
         {
           "day": "Monday",

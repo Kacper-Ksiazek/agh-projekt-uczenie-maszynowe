@@ -33,11 +33,12 @@ def data_to_prompt(data: dict) -> str:
     - Activity Level: {data.get("activity_level")}  
     - Cooking Time per Day: {data.get("cooking_time_per_day")}
 
-    - Allergies: {", ".join(data.get("allergies", []))}
-    - Intolerances: {", ".join(data.get("intolerance", []))}
-    - Disliked Foods: {", ".join(data.get("disliked_foods", []))}
-    - Preferred Foods: {", ".join(data.get("preferred_foods", []))}
-    - Kitchen Equipment: {", ".join(data.get("kitchen_equipment", []))}
+    - Allergies: {", ".join(map(str, data.get("allergies", [])))}
+    - Intolerances: {", ".join(map(str, data.get("intolerance", [])))}
+    - Disliked Foods: {", ".join(map(str, data.get("disliked_foods", [])))}
+    - Preferred Foods: {", ".join(map(str, data.get("preferred_foods", [])))}
+    - Kitchen Equipment: {", ".join(map(str, data.get("kitchen_equipment", [])))}
+
 
     - Daily Schedule:
       - Start: {data.get("schedule", {}).get("start")}

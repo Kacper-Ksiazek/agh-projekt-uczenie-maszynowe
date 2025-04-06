@@ -1,4 +1,4 @@
-import type { DietFormData } from "$lib/types";
+import type { DietFormData, Gender } from "$lib/types";
 
 export const dietState = $state<DietFormData>({
   age: 0,
@@ -15,6 +15,4 @@ export const dietState = $state<DietFormData>({
   dislikedFoods: "",
   preferredFoods: "",
   kitchenEquipment: "",
-
-  schedule: [],
 });

@@ -7,6 +7,8 @@ import * as Card from "$lib/components/ui/card";
 import Progress from "../ui/progress/progress.svelte";
 import Button from "../ui/button/button.svelte";
 import Step_1 from "./steps/step-1.svelte";
+import { dietState } from "./state.svelte";
+import Step_2 from "./steps/step-2.svelte";
 
 let currentStep = $state<"STEP_1" | "STEP_2" | "STEP_3" | "STEP_4">("STEP_1");
 
@@ -75,7 +77,7 @@ function prevStep() {
     {#if currentStep === "STEP_1"}
       <Step_1 />
     {:else if currentStep === "STEP_2"}
-      <!-- <Step_2 /> -->
+      <Step_2 />
     {:else if currentStep === "STEP_3"}
       <!-- <Step_3 /> -->
     {/if}
@@ -88,3 +90,5 @@ function prevStep() {
     <Button on:click={nextStep}>Dalej</Button>
   </Card.Footer>
 </Card.Root>
+
+{JSON.stringify(dietState)}

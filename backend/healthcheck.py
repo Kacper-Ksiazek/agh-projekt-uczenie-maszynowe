@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 from model_gemini import *
 from model_gemini import data_to_prompt
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 chat_session = model.start_chat(history=[])
 

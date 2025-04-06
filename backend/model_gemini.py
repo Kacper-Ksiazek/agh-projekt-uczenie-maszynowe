@@ -20,18 +20,30 @@ generation_config = {
 model = genai.GenerativeModel(
     model_name="gemini-1.5-pro",
     generation_config=generation_config
+system_instructions = (
+    "You are a dietitian tasked with creating a personalized meal plan for the user. "
+    "The plan should be based on the number of days provided by the user "
+    "and take into account all relevant parameters they provide, such as: "
+    "Age, Weight, Height, Gender, Goal, Activity Level, Cooking Time per Day, "
+    "Days, Allergies, Intolerances, Disliked Foods, Preferred Foods, Kitchen Equipment.\n\n"
+
+    "Based on the user profile, create a balanced meal plan for the number of days specified. "
+    "Include breakfast, lunch, dinner, and snacks for each day, ensuring the plan is tailored to "
+    "the user's goal and preferences.\n\n"
+
+    "Ensure the meals are suitable for the user's allergies, intolerances, and disliked foods. "
+    "Provide recipes or cooking methods that fit within the user's preferred cooking time and "
+    "available kitchen equipment.\n\n"
+
+    "Make sure the meals align with the user's activity level and nutritional goals "
+    "(e.g., macronutrient distribution, total caloric intake, etc.).\n\n"
+
+    "Offer alternative ingredients or meal ideas where necessary, particularly for foods the user "
+    "dislikes or is intolerant to."
 )
 
 # Create prompt to Gemini using user data
 def data_to_prompt(data: dict) -> str:
-    schedule_entries = []
-    for s in data.get("schedule", []):
-        entry = f"""    - Start: {s.get('start', '')}
-    - End: {s.get('end', '')}
-    - Description: {s.get('description', '')}"""
-        schedule_entries.append(entry)
-
-    schedule_str = "\n\n".join(schedule_entries) if schedule_entries else "None"
 
     user_info = f"""The user profile:
     - Age: {data.get("age")}
@@ -41,6 +53,7 @@ def data_to_prompt(data: dict) -> str:
     - Goal: {data.get("goal")}  
     - Activity Level: {data.get("activity_level")}  
     - Cooking Time per Day: {data.get("cooking_time_per_day")}
+    - Days: {data.get("number_of_days")}
 
     - Allergies: {", ".join(map(str, data.get("allergies", []))) or "None"}
     - Intolerances: {", ".join(map(str, data.get("intolerance", []))) or "None"}
@@ -48,29 +61,27 @@ def data_to_prompt(data: dict) -> str:
     - Preferred Foods: {", ".join(map(str, data.get("preferred_foods", []))) or "None"}
     - Kitchen Equipment: {", ".join(map(str, data.get("kitchen_equipment", []))) or "None"}
 
-    - Daily Schedule:
-{schedule_str}
     """
 
     expected_output = """
-    Based on this profile, generate a 7-day diet plan.
+        Based on this profile, generate a {days}-day diet plan.
 
-    Return only a valid JSON in this format:
-    {
-      "days": [
-        {
-          "day": "Monday",
-          "meals": [
-            {
-              "name": "Meal Name",
-              "ingredients": ["ingredient1", "ingredient2"],
-              "instructions": "How to prepare"
-            }
+        Return only a valid JSON in this format:
+        {{
+          "days": [
+            {{
+              "day": "Monday",
+              "meals": [
+                {{
+                  "name": "Meal Name",
+                  "ingredients": ["ingredient1", "ingredient2"],
+                  "instructions": "How to prepare"
+                }}
+              ]
+            }}
           ]
-        }
-      ]
-    }
+        }}
 
-    Do not include markdown, explanations, or formatting. Return only valid JSON without extra text.
-    """
+        Do not include markdown, explanations, or formatting. Return only valid JSON without extra text.
+        """.format(days=data.get("days", 7))  # Domyślnie 7 dni jeśli nie podano
     return user_info + "\n\n" + expected_output

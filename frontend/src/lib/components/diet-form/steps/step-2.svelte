@@ -1,16 +1,8 @@
 <script lang="ts">
 import { dietState } from "../state.svelte";
 
-import type {
-  Gender,
-  ActivityLevel,
-  Goal,
-  CookingTimePerDay,
-} from "$lib/types";
-
 import { Label } from "$lib/components/ui/label";
 import { Input } from "$lib/components/ui/input";
-import * as Select from "$lib/components/ui/select";
 import Textarea from "$lib/components/ui/textarea/textarea.svelte";
 </script>
 

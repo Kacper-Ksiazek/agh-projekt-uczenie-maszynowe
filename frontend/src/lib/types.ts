@@ -19,4 +19,26 @@ export interface DietFormData {
   dislikedFoods: string;
   preferredFoods: string;
   kitchenEquipment: string;
+
+  // Step 3
+  budget: number;
+  numberOfDays: number;
 }
+
+export interface AIGeneratedSingleMeal {
+  name: string;
+  description: string;
+
+  ingredients: string[];
+
+  macros: {
+    calories: number;
+    protein: number;
+    carbs: number;
+    fat: number;
+  };
+
+  recipe_in_steps: string[];
+}
+
+export type AIGeneratedDietPlan = AIGeneratedSingleMeal[][];

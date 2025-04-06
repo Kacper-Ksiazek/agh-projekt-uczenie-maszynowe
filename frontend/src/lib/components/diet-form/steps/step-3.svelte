@@ -5,7 +5,7 @@ import { Label } from "$lib/components/ui/label";
 import { Input } from "$lib/components/ui/input";
 </script>
 
-<div>
+<div class="flex flex-col gap-1">
   <Label for="numberOfDays">Ilość dni</Label>
   <Input
     id="numberOfDays"
@@ -17,7 +17,7 @@ import { Input } from "$lib/components/ui/input";
   />
 </div>
 
-<div>
+<div class="flex flex-col gap-1">
   <Label for="numberOfDays">Budżet [zł]</Label>
   <Input
     id="numberOfDays"

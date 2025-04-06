@@ -6,7 +6,7 @@ import { Input } from "$lib/components/ui/input";
 import Textarea from "$lib/components/ui/textarea/textarea.svelte";
 </script>
 
-<div>
+<div class="flex flex-col gap-1">
   <Label for="allergies">Alergie</Label>
   <Input
     id="allergies"
@@ -15,7 +15,7 @@ import Textarea from "$lib/components/ui/textarea/textarea.svelte";
   />
 </div>
 
-<div>
+<div class="flex flex-col gap-1">
   <Label for="intolerances">Nietolerancje</Label>
   <Input
     id="intolerances"
@@ -24,7 +24,7 @@ import Textarea from "$lib/components/ui/textarea/textarea.svelte";
   />
 </div>
 
-<div>
+<div class="flex flex-col gap-1">
   <Label for="dislikes">Nielubiane produkty</Label>
   <Textarea
     id="dislikes"
@@ -33,7 +33,7 @@ import Textarea from "$lib/components/ui/textarea/textarea.svelte";
   />
 </div>
 
-<div>
+<div class="flex flex-col gap-1">
   <Label for="dislikes">Preferencje kulinarne</Label>
   <Textarea
     id="dislikes"
@@ -42,7 +42,7 @@ import Textarea from "$lib/components/ui/textarea/textarea.svelte";
   />
 </div>
 
-<div>
+<div class="flex flex-col gap-1">
   <Label for="kitchenEquipment">Sprzęt kuchenny</Label>
   <Textarea
     id="kitchenEquipment"

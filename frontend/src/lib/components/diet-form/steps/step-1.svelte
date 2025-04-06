@@ -11,7 +11,6 @@ import type {
 import { Label } from "$lib/components/ui/label";
 import { Input } from "$lib/components/ui/input";
 import * as Select from "$lib/components/ui/select";
-import type { Selected } from "bits-ui";
 import {
   activityLevelOptions,
   cookingTimeOptions,
@@ -36,7 +35,7 @@ let selectedCookingTime = $derived(
 );
 </script>
 
-<div>
+<div class="flex flex-col gap-1">
   <Label>Płeć</Label>
   <Select.Root
     selected={selectedGender}
@@ -56,12 +55,12 @@ let selectedCookingTime = $derived(
   </Select.Root>
 </div>
 
-<div>
+<div class="flex flex-col gap-1">
   <Label for="age">Wiek</Label>
   <Input id="age" type="number" bind:value={dietState.age} placeholder="Wiek" />
 </div>
 
-<div>
+<div class="flex flex-col gap-1">
   <Label for="weight">Waga [kg]</Label>
   <Input
     id="weight"
@@ -72,7 +71,7 @@ let selectedCookingTime = $derived(
   />
 </div>
 
-<div>
+<div class="flex flex-col gap-1">
   <Label for="height">Wzrost [cm]</Label>
   <Input
     id="height"
@@ -83,7 +82,7 @@ let selectedCookingTime = $derived(
   />
 </div>
 
-<div>
+<div class="flex flex-col gap-1">
   <Label for="activityLevel">Poziom aktywności fizycznej</Label>
   <Select.Root
     name="activityLevel"
@@ -104,7 +103,7 @@ let selectedCookingTime = $derived(
   </Select.Root>
 </div>
 
-<div>
+<div class="flex flex-col gap-1">
   <Label>Cel diety</Label>
   <Select.Root
     selected={selectedGoal}
@@ -124,7 +123,7 @@ let selectedCookingTime = $derived(
   </Select.Root>
 </div>
 
-<div>
+<div class="flex flex-col gap-1">
   <Label>Ile średnio dziennie masz czasu na przygotowanie posiłków?</Label>
   <Select.Root
     selected={selectedCookingTime}

@@ -1,38 +1,38 @@
-# sv
+# Aplikacja do diet - UI
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Projekt realizowany jako czesc projektu zaliczeniowego z przedmiotu Uczenie Maszynowe w ramach kierunku Inzynieria i Analiza Danych.
 
-## Creating a project
+## Stack technologiczny:
 
-If you're seeing this, you've probably already done this step. Congrats!
+1. Svelte 5.0
+2. SvelteKit 2.16
+3. Tailwind CSS
+4. Typescript
+5. shadcn/ui - svelte
+6. TanstackQuery Svelte
 
-```bash
-# create a new project in the current directory
-npx sv create
+## Wymagania:
 
-# create a new project in my-app
-npx sv create my-app
+- node.js w we w wersji 20.x
+- pnpm w wersji 9.x
+
+W przypadku braku zainstalowanego pnpm, mozna zainstalowac go globalnie za pomoca polecenia:
+
+```
+npm install -g pnpm
 ```
 
-## Developing
+## Instalacja pakietow:
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+```
+cd frontend
+pnpm install
 ```
 
-## Building
+## Uruchomienie aplikacji:
 
-To create a production version of your app:
-
-```bash
-npm run build
+```
+pnpm run dev --open
 ```
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Aplikacja dodiet powinna byc dostepna pod adresem: [http://localhost:5173](http://localhost:5173)

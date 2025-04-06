@@ -9,8 +9,6 @@ const API_URL = "http://127.0.0.1:5000/generate";
 
 const generateMutation = createMutation({
   mutationFn: async (data: DietFormData) => {
-    console.log("Sending data to API:", data);
-
     const response = await fetch(API_URL, {
       method: "POST",
       headers: {
@@ -41,8 +39,6 @@ const generateMutation = createMutation({
 });
 
 async function generateDietUsingAI(data: DietFormData) {
-  console.log("Generating diet using AI with data:", data);
-
   await $generateMutation.mutateAsync(data, {
     onSuccess: (data) => {
       toast.success("Dieta została wygenerowana pomyślnie!");

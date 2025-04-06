@@ -7,6 +7,10 @@ let { children } = $props();
 const queryClient = new QueryClient();
 </script>
 
+<svelte:head>
+  <title>AI Generator Diet | IiAD</title>
+</svelte:head>
+
 <Toaster />
 
 <QueryClientProvider client={queryClient}>

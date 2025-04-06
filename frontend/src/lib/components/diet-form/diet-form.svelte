@@ -79,7 +79,7 @@ function prevStep() {
     <Card.Title>{cardHeader}</Card.Title>
   </Card.Header>
 
-  <Card.Content class="flex min-h-[550px] flex-grow flex-col gap-2 ">
+  <Card.Content class="flex min-h-[550px] flex-grow flex-col gap-3 ">
     {#if currentStep === "STEP_1"}
       <Step_1 />
     {:else if currentStep === "STEP_2"}

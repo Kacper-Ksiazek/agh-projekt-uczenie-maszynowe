@@ -15,4 +15,7 @@ export const dietState = $state<DietFormData>({
   dislikedFoods: "",
   preferredFoods: "",
   kitchenEquipment: "",
+  budget: 0,
+  numberOfDays: 1,
+  numberOfMealsPerDay: 5,
 });

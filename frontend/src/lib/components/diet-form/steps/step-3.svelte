@@ -18,12 +18,24 @@ import { Input } from "$lib/components/ui/input";
 </div>
 
 <div class="flex flex-col gap-1">
-  <Label for="numberOfDays">Budżet [zł]</Label>
+  <Label for="budget">Budżet [zł]</Label>
   <Input
-    id="numberOfDays"
+    id="budget"
     type="number"
     bind:value={dietState.budget}
-    min={0}
+    min={dietState.budget * 10}
     placeholder="Budżet [zł] na cały okres diety"
+  />
+</div>
+
+<div class="flex flex-col gap-1">
+  <Label for="numberOfMealsPerDay">Ilość posiłków dziennie</Label>
+  <Input
+    id="numberOfMealsPerDay"
+    type="number"
+    bind:value={dietState.numberOfMealsPerDay}
+    min={1}
+    max={10}
+    placeholder="Ilość posiłków dziennie"
   />
 </div>

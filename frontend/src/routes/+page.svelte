@@ -29,6 +29,7 @@ const generateMutation = createMutation({
         disliked_foods: data.dislikedFoods,
         preferred_foods: data.preferredFoods,
         kitchen_equipment: data.kitchenEquipment,
+        number_of_meals: data.numberOfMealsPerDay,
       }),
     });
     if (!response.ok) {

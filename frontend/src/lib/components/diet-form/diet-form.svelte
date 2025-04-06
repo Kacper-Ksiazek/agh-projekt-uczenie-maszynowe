@@ -1,12 +1,18 @@
 <script lang="ts">
-import Input from "../ui/input/input.svelte";
-import Label from "../ui/label/label.svelte";
-
 import * as Card from "$lib/components/ui/card";
 
 import Progress from "../ui/progress/progress.svelte";
 import Button from "../ui/button/button.svelte";
 import Step_1 from "./steps/step-1.svelte";
+import Step_2 from "./steps/step-2.svelte";
+import Step_3 from "./steps/step-3.svelte";
+import Step_4 from "./steps/step-4.svelte";
+import type { DietFormData } from "$lib/types";
+import { dietState } from "./state.svelte";
+
+const { generateDietUsingAI } = $props<{
+  generateDietUsingAI: (data: DietFormData) => Promise<void>;
+}>();
 
 let currentStep = $state<"STEP_1" | "STEP_2" | "STEP_3" | "STEP_4">("STEP_1");
 
@@ -50,6 +56,8 @@ function nextStep() {
     currentStep = "STEP_3";
   } else if (currentStep === "STEP_3") {
     currentStep = "STEP_4";
+  } else if (currentStep === "STEP_4") {
+    generateDietUsingAI(dietState);
   }
 }
 
@@ -66,18 +74,20 @@ function prevStep() {
 
 <Card.Root class="mx-auto w-[800px]">
   <Card.Header>
-    <Progress value={progressValue} />
+    <Progress value={progressValue} class="mb-2" />
 
     <Card.Title>{cardHeader}</Card.Title>
   </Card.Header>
 
-  <Card.Content class="flex flex-col gap-2">
+  <Card.Content class="flex min-h-[550px] flex-grow flex-col gap-2 ">
     {#if currentStep === "STEP_1"}
       <Step_1 />
     {:else if currentStep === "STEP_2"}
-      <!-- <Step_2 /> -->
+      <Step_2 />
     {:else if currentStep === "STEP_3"}
-      <!-- <Step_3 /> -->
+      <Step_3 />
+    {:else if currentStep === "STEP_4"}
+      <Step_4 />
     {/if}
   </Card.Content>
 
@@ -85,6 +95,8 @@ function prevStep() {
     <Button variant="outline" disabled={isFirstStep} on:click={prevStep}
       >Cofnij</Button
     >
-    <Button on:click={nextStep}>Dalej</Button>
+    <Button on:click={nextStep}>
+      {isLastStep ? "Wygeneruj" : "Dalej"}
+    </Button>
   </Card.Footer>
 </Card.Root>

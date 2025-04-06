@@ -2,37 +2,65 @@
 import { dietState } from "../state.svelte";
 
 import type {
-  Gender,
   ActivityLevel,
   Goal,
   CookingTimePerDay,
+  Gender,
 } from "$lib/types";
 
 import { Label } from "$lib/components/ui/label";
 import { Input } from "$lib/components/ui/input";
 import * as Select from "$lib/components/ui/select";
+import {
+  activityLevelOptions,
+  cookingTimeOptions,
+  genderOptions,
+  goalOptions,
+} from "../options";
+
+let selectedGender = $derived(
+  genderOptions.find(({ value }) => value === dietState.gender),
+);
+
+let selectedActivityLevel = $derived(
+  activityLevelOptions.find(({ value }) => value === dietState.activityLevel),
+);
+
+let selectedGoal = $derived(
+  goalOptions.find(({ value }) => value === dietState.goal),
+);
+
+let selectedCookingTime = $derived(
+  cookingTimeOptions.find(({ value }) => value === dietState.cookingTime),
+);
 </script>
 
-<div>
-  <Label for="age">Wiek</Label>
-  <Input id="age" type="number" bind:value={dietState.age} placeholder="Wiek" />
-</div>
-
-<div>
+<div class="flex flex-col gap-1">
   <Label>Płeć</Label>
-  <Select.Root>
+  <Select.Root
+    selected={selectedGender}
+    onSelectedChange={(selected)=>{
+    dietState.gender = selected!.value as Gender
+  }}
+  >
     <Select.Trigger>
       <Select.Value placeholder="Wybierz płeć" />
     </Select.Trigger>
 
     <Select.Content>
-      <Select.Item value={"MALE" as Gender}>Mężczyzna</Select.Item>
-      <Select.Item value={"FEMALE" as Gender}>Kobieta</Select.Item>
+      {#each genderOptions as option}
+        <Select.Item value={option.value} label={option.label} />
+      {/each}
     </Select.Content>
   </Select.Root>
 </div>
 
-<div>
+<div class="flex flex-col gap-1">
+  <Label for="age">Wiek</Label>
+  <Input id="age" type="number" bind:value={dietState.age} placeholder="Wiek" />
+</div>
+
+<div class="flex flex-col gap-1">
   <Label for="weight">Waga [kg]</Label>
   <Input
     id="weight"
@@ -43,7 +71,7 @@ import * as Select from "$lib/components/ui/select";
   />
 </div>
 
-<div>
+<div class="flex flex-col gap-1">
   <Label for="height">Wzrost [cm]</Label>
   <Input
     id="height"
@@ -54,65 +82,63 @@ import * as Select from "$lib/components/ui/select";
   />
 </div>
 
-<div>
-  <Label>Poziom aktywności fizycznej</Label>
-  <Select.Root>
+<div class="flex flex-col gap-1">
+  <Label for="activityLevel">Poziom aktywności fizycznej</Label>
+  <Select.Root
+    name="activityLevel"
+    selected={selectedActivityLevel}
+    onSelectedChange={(selected) => {
+      dietState.activityLevel = selected!.value as ActivityLevel;
+    }}
+  >
     <Select.Trigger>
       <Select.Value placeholder="Wybierz poziom aktywności" />
     </Select.Trigger>
 
     <Select.Content>
-      <Select.Item value={"SEDENTARY" as ActivityLevel}>
-        Siedzący tryb życia ( brak aktywności fizycznej )
-      </Select.Item>
-      <Select.Item value={"LIGHT" as ActivityLevel}>
-        Lekka aktywność fizyczna ( 1-3 dni w tygodniu )
-      </Select.Item>
-      <Select.Item value={"MODERATE" as ActivityLevel}>
-        Umiarkowana aktywność fizyczna ( 3-5 dni w tygodniu )
-      </Select.Item>
-      <Select.Item value={"ACTIVE" as ActivityLevel}>
-        Wysoka aktywność fizyczna ( 5-7 dni w tygodniu )
-      </Select.Item>
+      {#each activityLevelOptions as option}
+        <Select.Item value={option.value} label={option.label} />
+      {/each}
     </Select.Content>
   </Select.Root>
 </div>
 
-<div>
+<div class="flex flex-col gap-1">
   <Label>Cel diety</Label>
-  <Select.Root>
+  <Select.Root
+    selected={selectedGoal}
+    onSelectedChange={(selected) => {
+    dietState.goal = selected!.value as Goal;
+  }}
+  >
     <Select.Trigger>
       <Select.Value placeholder="Wybierz cel diety" />
     </Select.Trigger>
 
     <Select.Content>
-      <Select.Item value={"WEIGHT_LOSS" as Goal}>Redukcja</Select.Item>
-      <Select.Item value={"WEIGHT_MAINTENANCE" as Goal}
-        >Utrzymanie wagi</Select.Item
-      >
-      <Select.Item value={"WEIGHT_GAIN" as Goal}>Przybranie wagi</Select.Item>
+      {#each goalOptions as option}
+        <Select.Item value={option.value} label={option.label} />
+      {/each}
     </Select.Content>
   </Select.Root>
 </div>
 
-<div>
+<div class="flex flex-col gap-1">
   <Label>Ile średnio dziennie masz czasu na przygotowanie posiłków?</Label>
-  <Select.Root>
+  <Select.Root
+    selected={selectedCookingTime}
+    onSelectedChange={(selected) => {
+      dietState.cookingTime = selected!.value as CookingTimePerDay;
+    }}
+  >
     <Select.Trigger>
       <Select.Value placeholder="Wybierz czas" />
     </Select.Trigger>
 
     <Select.Content>
-      <Select.Item value={"30_MINUTES" as CookingTimePerDay}
-        >Mniej niż 30 minut</Select.Item
-      >
-      <Select.Item value={"1_HOUR" as CookingTimePerDay}>
-        30 minut - 1 godzina
-      </Select.Item>
-
-      <Select.Item value={"OVER_1_HOUR" as CookingTimePerDay}>
-        Powyżej godziny
-      </Select.Item>
+      {#each cookingTimeOptions as option}
+        <Select.Item value={option.value} label={option.label} />
+      {/each}
     </Select.Content>
   </Select.Root>
 </div>

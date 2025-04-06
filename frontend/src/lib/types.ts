@@ -3,12 +3,6 @@ export type Goal = "WEIGHT_LOSS" | "WEIGHT_MAINTENANCE" | "WEIGHT_GAIN";
 export type ActivityLevel = "SEDENTARY" | "LIGHT" | "MODERATE" | "ACTIVE";
 export type CookingTimePerDay = "30_MINUTES" | "1_HOUR" | "OVER_1_HOUR";
 
-export type DailySchedule = {
-  start: string;
-  end: string;
-  description: string;
-};
-
 export interface DietFormData {
   // Step 1
   age: number;
@@ -26,5 +20,25 @@ export interface DietFormData {
   preferredFoods: string;
   kitchenEquipment: string;
 
-  schedule: Array<DailySchedule>;
+  // Step 3
+  budget: number;
+  numberOfDays: number;
 }
+
+export interface AIGeneratedSingleMeal {
+  name: string;
+  description: string;
+
+  ingredients: string[];
+
+  macros: {
+    calories: number;
+    protein: number;
+    carbs: number;
+    fat: number;
+  };
+
+  recipe_in_steps: string[];
+}
+
+export type AIGeneratedDietPlan = AIGeneratedSingleMeal[][];

@@ -84,7 +84,7 @@ def data_to_prompt(data: dict) -> str:
                 fat: number;
               }};
 
-            recipe_in_steps: string[];
+            recipe_in_steps: string[]; # For every step which requires time, add time in minutes at the end of the step. When using oven or similar, add temperature in Celsius at the end of the step as well.
           ]
         ]
 

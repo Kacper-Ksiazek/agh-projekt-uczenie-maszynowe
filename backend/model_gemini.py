@@ -2,6 +2,10 @@ import os
 import google.generativeai as genai
 from dotenv import load_dotenv
 
+from backend.orm import User_Allergies
+from orm import SessionLocal, Users, Allergies
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy import text
 
 load_dotenv()
 API_KEY = os.getenv("GEMINI_API_KEY")
@@ -90,3 +94,48 @@ def data_to_prompt(data: dict) -> str:
         Do not include markdown, explanations, or formatting. Return only valid JSON without extra text.
         """.format(days=data.get("days", 7))  # Domyślnie 7 dni jeśli nie podano
     return user_info + "\n\n" + expected_output
+
+def save_user_data(data: dict) -> str:
+    db = SessionLocal()
+
+    try:
+        user = Users(
+            age=data.get("age"),
+            height=data.get("height"),
+            weight=data.get("weight"),
+            gender=data.get("gender"),
+            health_goal=data.get("goal"),
+            exercise_frequency=data.get("activity_level"),
+            meal_prep_time=data.get("cooking_time_per_day"),
+            weekly_budget=data.get("budget"),
+            disliked_foods=", ".join(map(str, data.get("disliked_foods", [])) if data.get("disliked_foods") else None)
+        )
+        db.add(user)
+        db.execute(text("SELECT setval('allergies_id_seq', (SELECT MAX(id) FROM allergies))"))
+        db.commit()
+        db.refresh(user)
+        allergy_names = data.get("allergies", [])
+
+        for allergy_name in allergy_names:
+            allergy = db.query(Allergies).filter_by(name=allergy_name).first()
+
+            if not allergy:
+                allergy = Allergies(name=allergy_name)
+                db.add(allergy)
+                db.commit()
+                db.refresh(allergy)
+
+            user_allergy = User_Allergies(user_id=user.id, allergy_id=allergy.id)
+            db.add(user_allergy)
+
+
+
+        return str(user.id)
+
+    except SQLAlchemyError as e:
+        print(f"[ERROR] Failed to save user data: {e}")
+        db.rollback()
+        return None
+
+    finally:
+        db.close()

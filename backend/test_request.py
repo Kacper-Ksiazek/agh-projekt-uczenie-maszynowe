@@ -7,18 +7,18 @@ url = "http://127.0.0.1:5000/generate"
 payload = {
     "age": 25,
     "gender": "male",
-    "current_weight": 75,
+    "weight": 75,
     "height": 180,
-    "exercise": ["gym", "cycling"],
+    "activity_level": " 5 times per week",
     "schedule": ["morning", "evening"],
-    "allergies": ["peanuts"],
+    "allergies": ["peanuts", "milk", "dairy", "celery"],
     "intolerances": ["lactose"],
     "diet_type": "high protein",
     "disliked_foods": ["mushrooms"],
     "goal": "muscle gain",
     "budget": 200,
     "equipment": ["blender", "microwave"],
-    "cooking_time": "30 minutes",
+    "cooking_time_per_day": "30 minutes",
     "meal_prep": "yes"
 }
 

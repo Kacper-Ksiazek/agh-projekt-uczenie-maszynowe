@@ -13,7 +13,9 @@ def generate_response():
         return jsonify({"error": "No data in request body"}), 400
 
     prompt = data_to_prompt(data)
-
+    user_id = save_user_data(data)
+    if not user_id:
+        return jsonify({"error": "Failed to save user data"}), 500
     import json
     try:
         response = model.generate_content(prompt)

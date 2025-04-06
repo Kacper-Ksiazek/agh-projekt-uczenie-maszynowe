@@ -37,13 +37,13 @@ import Textarea from "$lib/components/ui/textarea/textarea.svelte";
   <Label for="dislikes">Preferencje kulinarne</Label>
   <Textarea
     id="dislikes"
-    bind:value={dietState.dislikedFoods}
+    bind:value={dietState.preferredFoods}
     placeholder="Opisz swoje preferencje kulinarne (opcjonalne)"
   />
 </div>
 
 <div>
-  <Label for="kitchenEquipment">Doprecyzuj co posiadasz w kuchni</Label>
+  <Label for="kitchenEquipment">Sprzęt kuchenny</Label>
   <Textarea
     id="kitchenEquipment"
     bind:value={dietState.kitchenEquipment}

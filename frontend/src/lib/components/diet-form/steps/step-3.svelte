@@ -22,7 +22,7 @@ import { Input } from "$lib/components/ui/input";
   <Input
     id="numberOfDays"
     type="number"
-    bind:value={dietState.numberOfDays}
+    bind:value={dietState.budget}
     min={0}
     placeholder="Budżet [zł] na cały okres diety"
   />

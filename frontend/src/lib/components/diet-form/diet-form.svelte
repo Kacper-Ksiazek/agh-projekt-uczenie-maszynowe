@@ -10,6 +10,7 @@ import Step_1 from "./steps/step-1.svelte";
 import { dietState } from "./state.svelte";
 import Step_2 from "./steps/step-2.svelte";
 import Step_3 from "./steps/step-3.svelte";
+import Step_4 from "./steps/step-4.svelte";
 
 let currentStep = $state<"STEP_1" | "STEP_2" | "STEP_3" | "STEP_4">("STEP_1");
 
@@ -81,6 +82,8 @@ function prevStep() {
       <Step_2 />
     {:else if currentStep === "STEP_3"}
       <Step_3 />
+    {:else if currentStep === "STEP_4"}
+      <Step_4 />
     {/if}
   </Card.Content>
 
